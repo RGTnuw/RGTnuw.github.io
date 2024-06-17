@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>超市页面 - 继续</title>
+    <title>今天你交粉红税了吗？</title>
     <style>
         body {
             margin: 0;
@@ -42,7 +42,7 @@
         .progress-bar {
             width: 10%; /* 从10%开始 */
             height: 100%;
-            background: linear-gradient(to right, #4caf50, #81c784);
+            background: #ff69b4; /* 修改为粉色 */
             border-radius: 10px;
             transition: width 1s;
         }
@@ -58,26 +58,26 @@
             left: 50%;
             transform: translateX(-50%);
             bottom: 20px;
-            width: 15vw;
-            height: 25vh;
+            width: 25vw;
+            height: 32vh;
         }
         .char2 {
-            left: 25%;
-            bottom: 50%;
+            left: 15%;
+            bottom: 100%;
             transform: translateY(-50%);
-            width: 15vw;
-            height: 25vh;
+            width: 17vw;
+            height: 27vh;
         }
         .char3 {
-            left: 75%;
-            bottom: 50%;
+            left: 85%;
+            bottom: 200%;
             transform: translateY(-50%);
-            width: 15vw;
-            height: 25vh;
+            width: 17vw;
+            height: 27vh;
         }
         .char4 {
-            left: 10%;
-            bottom: 60%;
+            left: -5%;
+            bottom: 70%;
             transform: translateY(-60%);
             width: 15vw;
             height: 25vh;
@@ -85,9 +85,27 @@
         .char5 {
             left: 50%;
             bottom: 200%;
-            transform: translate(-33%,-160%);
-            width: 28vw;
-            height: 15vh;
+            transform: translate(-48%,-230%);
+            width: 23vw;
+            height: 14vh;
+        }
+        .message {
+            display: none;
+            color: white;
+            font-size: 17px;
+            animation: fadeBlink 2s infinite;
+            position: absolute;
+            top: -9%;
+            width: 100%;
+            text-align: center;
+        }
+        @keyframes fadeBlink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -98,10 +116,11 @@
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         <img src="images/char1.png" class="character char1" id="char1" onclick="characterClicked(event, 1)">
-        <img src="images/char2.png" class="character char2" id="char2" onclick="characterClicked(event, 2)">
-        <img src="images/char3.png" class="character char3" id="char3" onclick="characterClicked(event, 3)">
-        <img src="images/char4.png" class="character char4" id="char4" onclick="characterClicked(event, 4)">
-        <img src="images/char5.png" class="character char5" id="char5" onclick="characterClicked(event, 5)">
+        <img src="images/char2.png" class="character char2" id="char2" onclick="characterClicked(event, 5)">
+        <img src="images/char3.png" class="character char3" id="char3" onclick="characterClicked(event, 4)">
+        <img src="images/char4.png" class="character char4" id="char4" onclick="characterClicked(event, 2)">
+        <img src="images/char5.png" class="character char5" id="char5" onclick="characterClicked(event, 3)">
+        <div class="message" id="message">点击任意空白处继续</div>
     </div>
     <script>
         let progress = parseInt(sessionStorage.getItem('progress')) || 10; // 从10%开始
@@ -148,7 +167,6 @@
         }
 
         function checkProgress() {
-            // 如果进度达到或超过50%，跳转到 progress-page.html
             if (progress >= 50) {
                 window.location.href = 'progress-page.html';
             }
@@ -164,6 +182,12 @@
 
                 // 更新进度条宽度
                 progressBar.style.width = progress + '%';
+            }
+
+            // 如果进度达到或超过50%，显示闪烁的提示信息
+            if (progress >= 50) {
+                const message = document.getElementById('message');
+                message.style.display = 'block';
             }
         }
     </script>

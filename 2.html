@@ -15,12 +15,16 @@
         .container {
             max-width: 800px;
             margin: auto;
-            background-color: white;
+            background-color: #f0f8ff; /* 临时背景颜色 */
+            background-image: url('images/background2.jpg'); /* 背景图像 */
+            background-size: cover;
+            background-position: center;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             position: relative;
         }
         h1 {
+            margin: 0;
             text-align: center;
             color: #333;
         }
@@ -31,6 +35,10 @@
         .video-container {
             text-align: center;
             margin-bottom: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #d9534f; /* 红色文本 */
         }
         .images-container {
             display: flex;
@@ -67,7 +75,7 @@
         <div class="content">
             <p>什么是粉红税呢？</p>
             <p>粉红税，也称为“性别税”，指的是在商品或服务上，针对女性消费者的价格歧视现象。通常表现为同一商品或服务，如果针对女性市场，通过使用粉色等女性可能喜欢的颜色，或者打上“女性专属”等标签，价格就会比男性版本或者无性别区分的产品或服务更高。这种现象不仅存在于实体商品中，如衣物、化妆品、电子产品等，还扩展到了服务领域，如干洗、剪发等日常服务。</p>
-            <p>“粉红税”并非近些年才出现的。1991年美国经济学与法学家Ian Ayres的一项研究发现：白人女性购买同款新车的费用比白人男性高40%。到2015年，纽约消费者协会的调查报告显示“粉红税”的状况并没有明显改善。这种生活成本强制的高溢价往往伴随着女性的一生。</p>
+            <p>“粉红税”并非近些年才出现的。1991年美国经济学与法学家Ian Ayres的一项研究发现：白人女性购买同款新车的费用比白人男性高<span class="highlight">40%</span>。到2015年，纽约消费者协会的调查报告显示“粉红税”的状况并没有明显改善。这种生活成本强制的高溢价往往伴随着女性的一生。</p>
         </div>
         <div class="video-container">
             <video controls width="100%">

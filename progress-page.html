@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>进度页面</title>
+    <title>纵横交错：制定我们的消费规则</title>
     <style>
         body {
             margin: 0;
@@ -13,10 +13,12 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background-image: url('images/w_p_background.png');
+            background-size: cover;
+            background-position: center;
         }
         .progress-container {
-            width: 80%;
+            width: 50%; /* 缩短进度条 */
             position: relative;
             margin-top: 50px;
         }
@@ -32,26 +34,27 @@
         .progress-bar {
             width: 50%; /* 初始宽度为50% */
             height: 100%;
-            background: linear-gradient(to right, #4caf50, #81c784);
+            background: linear-gradient(to right, #ff69b4, #ff1493);
             border-radius: 15px;
             transition: width 1s;
         }
-        .milestone {
+        .walking-man {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border: 2px solid #4caf50;
-            border-radius: 50%;
-            cursor: pointer;
+            top: -60px; /* 将小人放置在进度条上方 */
+            left: 50%; /* 初始位置 */
+            width: 70px;
+            height: 60px;
+            background-image: url('images/walkman.gif'); /* 替换为小人动画的路径 */
+            background-size: cover;
+            transition: left 1s;
+            z-index: 10; /* 确保小人显示在最前面 */
         }
-        .milestone.milestone-60 { left: 60%; }
-        .milestone.milestone-70 { left: 70%; }
-        .milestone.milestone-80 { left: 80%; }
-        .milestone.milestone-90 { left: 90%; }
-        .milestone.milestone-100 { left: calc(100% - 10px); transform: translate(-50%, -50%); }
+        .progress-text {
+            margin-top: 10px;
+            font-size: 1.5em;
+            color: #ff69b4;
+            text-align: center;
+        }
         .popup {
             display: none;
             position: fixed;
@@ -72,7 +75,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: red;
+            background: #ff69b4;
             color: white;
             border: none;
             border-radius: 50%;
@@ -81,14 +84,15 @@
             cursor: pointer;
             font-size: 16px;
         }
-        .walking-man {
-            position: absolute;
-            bottom: 40px;
-            width: 50px;
-            height: 50px;
-            background-image: url('images/walking-man.png'); /* 替换为小人动画的路径 */
-            background-size: cover;
-            transition: left 1s;
+        .move-on-btn {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -96,14 +100,11 @@
     <div class="progress-container">
         <div class="progress-bar-background">
             <div class="progress-bar" id="progress-bar"></div>
-            <div class="milestone milestone-60" onclick="showPopup(1)"></div>
-            <div class="milestone milestone-70" onclick="showPopup(2)"></div>
-            <div class="milestone milestone-80" onclick="showPopup(3)"></div>
-            <div class="milestone milestone-90" onclick="showPopup(4)"></div>
-            <div class="milestone milestone-100" onclick="showPopup(5)"></div>
-            <div class="walking-man" id="walking-man"></div>
         </div>
+        <div class="walking-man" id="walking-man"></div> <!-- 将小人放在进度条上方 -->
+        <div class="progress-text" id="progress-text">50%</div> <!-- 显示进度的数字 -->
     </div>
+    <button class="move-on-btn" onclick="moveOn()">Move On</button>
     <div class="popup" id="popup">
         <button class="close-btn" onclick="closePopup()">×</button>
         <img id="popup-img" src="" alt="Popup Image">
@@ -111,34 +112,37 @@
     <script>
         const progressBar = document.getElementById('progress-bar');
         const walkingMan = document.getElementById('walking-man');
-        const milestones = {
-            1: { pos: '60%', img: 'images/p_1.png', progress: 60 },
-            2: { pos: '70%', img: 'images/p_2.png', progress: 70 },
-            3: { pos: '80%', img: 'images/p_3.png', progress: 80 },
-            4: { pos: '90%', img: 'images/p_4.png', progress: 90 },
-            5: { pos: '99%', img: 'images/p_5.png', progress: 100 }
-        };
-        let progress = 50; // 初始进度为50%
-        let visited = new Set();
+        const popup = document.getElementById('popup');
+        const popupImg = document.getElementById('popup-img');
+        const progressText = document.getElementById('progress-text');
+        const milestones = [
+            { img: 'images/p_1.png', progress: 60, manPosition: 60 },
+            { img: 'images/p_2.png', progress: 70, manPosition: 70 },
+            { img: 'images/p_3.png', progress: 80, manPosition: 80 },
+            { img: 'images/p_4.png', progress: 90, manPosition: 90 },
+            { img: 'images/p_5.png', progress: 99, manPosition: 99 }
+        ];
+        let currentMilestone = 0;
 
-        function showPopup(index) {
-            const popup = document.getElementById('popup');
-            const popupImg = document.getElementById('popup-img');
-
-            if (!visited.has(index)) {
-                visited.add(index);
-                progress = milestones[index].progress;
-                progressBar.style.width = progress + '%';
+        function moveOn() {
+            if (currentMilestone < milestones.length) {
+                const milestone = milestones[currentMilestone];
+                progressBar.style.width = milestone.progress + '%';
+                walkingMan.style.left = `calc(${milestone.manPosition}% - 25px)`;
+                progressText.textContent = milestone.progress + '%';
+                popupImg.src = milestone.img;
+                popup.style.display = 'flex';
+                currentMilestone++;
             }
-
-            walkingMan.style.left = milestones[index].pos;
-            popupImg.src = milestones[index].img;
-            popup.style.display = 'flex';
         }
 
         function closePopup() {
-            const popup = document.getElementById('popup');
             popup.style.display = 'none';
+            if (currentMilestone === milestones.length) {
+                setTimeout(() => {
+                    window.location.href = 'end.html';
+                }, 1000); // 1秒延迟后跳转到end.html
+            }
         }
     </script>
 </body>

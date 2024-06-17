@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>欢迎页面</title>
+    <title>粉红的诱惑：打破消费中的游戏规则</title>
     <style>
         body {
             display: flex;
@@ -12,28 +12,46 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f5f5f5;
+            background-image: url('images/w_p_background.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center; /* 确保文本居中 */
+            padding: 0 10%; /* 为小屏幕添加左右内边距 */
         }
-        .welcome-text {
-            font-size: 48px;
+        .title {
+            font-size: 30px;
+            color: brown;
             margin-bottom: 20px;
+            max-width: 80%; /* 限制标题的最大宽度 */
+        }
+        .subtitle {
+            font-size: 17px;
+            color: #ea517f;
+            margin-bottom: 40px;
+            max-width: 80%; /* 限制正文的最大宽度 */
+        }
+        .highlight {
+            font-size: 21px;
+            color: brown;
+            background-color: white; /* 高亮显示 */
         }
         .start-button {
             padding: 10px 20px;
             font-size: 24px;
             border: none;
             border-radius: 10px;
-            background-color: #4CAF50;
+            background-color: #ff69b4;
             color: white;
             cursor: pointer;
         }
         .start-button:hover {
-            background-color: #45a049;
+            background-color: #ff1493;
         }
     </style>
 </head>
 <body>
-    <div class="welcome-text">欢迎光临</div>
+    <div class="title">粉红的诱惑：打破消费中的游戏规则</div>
+    <div class="subtitle">你知道吗？<br>女性一年往往要比男性多花 <span class="highlight">68万元</span>，<br>这是为什么呢？</div>
     <button class="start-button" onclick="start()">探寻真相</button>
 
     <script>
