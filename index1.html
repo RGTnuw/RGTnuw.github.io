@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>超市页面 - 初始</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100vh;
+            opacity: 0;
+            transition: opacity 2s;
+            background-color: #f5f5f5; /* 临时背景颜色，在背景图片加载前显示 */
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/supermarket.webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+        .character {
+            position: absolute;
+            cursor: pointer;
+            transition: filter 0.3s;
+        }
+        .character:hover {
+            filter: drop-shadow(0 0 10px white);
+        }
+        .char1 {
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            width: 15vw;
+            height: 25vh;
+        }
+        .hidden {
+            display: none;
+        }
+        .blackout {
+            background-color: black !important;
+            transition: background-color 2s;
+        }
+    </style>
+</head>
+<body onload="fadeIn()">
+    <div class="background" id="background"></div>
+    <img src="images/char1.png" class="character char1 hidden" id="char1" onclick="characterClicked(1)">
+    <script>
+        function fadeIn() {
+            document.body.style.opacity = 1;
+            const background = document.getElementById('background');
+            background.style.opacity = 1;
+            setTimeout(blackout, 1000); // 1秒后执行blackout函数
+        }
+
+        function blackout() {
+            document.getElementById('background').style.opacity = 0;
+            document.body.classList.add('blackout');
+            document.getElementById('char1').classList.remove('hidden');
+        }
+
+        function characterClicked(charId) {
+            if (charId === 1) {
+                window.location.href = '1.html';
+            }
+        }
+    </script>
+</body>
+</html>
